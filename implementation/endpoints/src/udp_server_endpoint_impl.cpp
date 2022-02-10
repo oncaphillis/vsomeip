@@ -86,11 +86,11 @@ udp_server_endpoint_impl::udp_server_endpoint_impl(
 
 #ifdef _WIN32
     const char* optval("0001");
-    ::setsockopt(socket_.native(), IPPROTO_IP, IP_PKTINFO,
+    ::setsockopt(socket_.native_handle(), IPPROTO_IP, IP_PKTINFO,
         optval, sizeof(optval));
 #else
     int optval(1);
-    ::setsockopt(socket_.native(), IPPROTO_IP, IP_PKTINFO,
+    ::setsockopt(socket_.native_handle(), IPPROTO_IP, IP_PKTINFO,
         &optval, sizeof(optval));
 #endif
 }

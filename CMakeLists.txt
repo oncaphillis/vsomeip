@@ -106,6 +106,12 @@ else()
   MESSAGE( STATUS "Boost was not found!")
 endif()
 
+if(${Boost_VERSION} GREATER 106599)
+    set(VSOMEIP_BOOST_HELPER implementation/helper/1.66)
+else()
+    set(VSOMEIP_BOOST_HELPER implementation/helper/1.55)
+endif()
+
 # DLT
 find_package(PkgConfig)
 pkg_check_modules(DLT "automotive-dlt >= 2.11")
@@ -123,7 +129,7 @@ endif(NOT SystemD_FOUND)
 
 include_directories(
     include
-    implementation/helper
+    ${VSOMEIP_BOOST_HELPER}
     ${DLT_INCLUDE_DIRS}
 )
 

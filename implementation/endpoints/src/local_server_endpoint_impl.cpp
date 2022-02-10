@@ -252,7 +252,7 @@ void local_server_endpoint_impl::accept_cbk(
                 uid_t uid(0xffffffff);
                 gid_t gid(0xffffffff);
                 client = credentials::receive_credentials(
-                     new_connection_socket.native(), uid, gid);
+                     new_connection_socket.native_handle(), uid, gid);
 
                 std::lock_guard<std::mutex> its_client_connection_lock(client_connections_mutex_);
                 auto found_client = client_connections_.find(client);
@@ -287,7 +287,7 @@ void local_server_endpoint_impl::accept_cbk(
                      return;
                 }
                 _connection->set_bound_client(client);
-                credentials::deactivate_credentials(new_connection_socket.native());
+                credentials::deactivate_credentials(new_connection_socket.native_handle());
             }
         }
 #endif
