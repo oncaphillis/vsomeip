@@ -14,4 +14,22 @@ install (
     RUNTIME DESTINATION "${INSTALL_BIN_DIR}" COMPONENT bin
 )
 
+install(CODE [[
+  execute_process(
+    WORKING_DIRECTORY ${CMAKE_INSTALL_PREFIX}
+    COMMAND bash -c "tar cfvz bla.tgz bin/vsomeipd lib/libvsomeip*so*"
+  )
+  execute_process(
+    WORKING_DIRECTORY ${CMAKE_INSTALL_PREFIX}
+    COMMAND /lhome/skloska/usr/bin/mttf-channel scp bla.tgz /tmp/
+  )
+  execute_process(
+    COMMAND /lhome/skloska/usr/bin/mttf-channel ssh "(mount -o remount,rw / && cd /usr/ && tar -o -x  -v -z -f /tmp/bla.tgz)"
+    ERROR_VARIABLE E
+   )
+   message(STATUS " E == ${E} ")
+ ]]
+
+)
+
 ###################################################################################################
